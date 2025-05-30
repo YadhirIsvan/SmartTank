@@ -8,6 +8,8 @@ from .views import (
     RegistrosMovimientoView, RegistrosMovimientoDeleteView,
     RegistrosNivelAguaView, RegistrosNivelAguaDeleteView,
     RegistrosFlujoAguaView, RegistrosFlujoAguaDeleteView,
+    SensorListCreateView, SensorRetrieveUpdateDestroyView,
+    TipoSensorListCreateView, TipoSensorRetrieveUpdateDestroyView
 )
 
 urlpatterns = [
@@ -18,6 +20,8 @@ urlpatterns = [
 
     # Peceras
     path('peceras/', PeceraListCreateView.as_view(), name='pecera-list'),
+
+    # Peceras
     path('peceras/<int:pk>/', PeceraDetailView.as_view(), name='pecera-detail'),
 
     # Registros
@@ -38,4 +42,10 @@ urlpatterns = [
 
     path('registros/flujoagua/', RegistrosFlujoAguaView.as_view(), name='flujoagua-list'),
     path('registros/flujoagua/<int:pk>/', RegistrosFlujoAguaDeleteView.as_view(), name='flujoagua-delete'),
+
+    path('sensores/', SensorListCreateView.as_view(), name='sensor-list-create'),
+    path('sensores/<int:pk>/', SensorRetrieveUpdateDestroyView.as_view(), name='sensor-detail'),
+
+     path('tiposensores/', TipoSensorListCreateView.as_view(), name='tipo-sensor-list-create'),
+    path('tiposensores/<int:pk>/', TipoSensorRetrieveUpdateDestroyView.as_view(), name='tipo-sensor-detail'),
 ]

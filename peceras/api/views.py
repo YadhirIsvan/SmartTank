@@ -7,6 +7,9 @@ from peceras.api.serializers import (
     RegistrosMovimientoSerializer,
     RegistrosNivelAguaSerializer,
     RegistrosFlujoAguaSerializer,
+    PecerasSerializer,
+    SensorSerializer,
+    TipoSensorSerializer
 )
 
 
@@ -19,10 +22,19 @@ from rest_framework import  status
 from rest_framework import generics
 from peceras.models import Cliente, Pecera, \
     RegistrosTemperatura, RegistrosCalidadAgua, RegistrosNivelOxigenoAgua, \
-    RegistrosMovimiento, RegistrosNivelAgua, RegistrosFlujoAgua
+    RegistrosMovimiento, RegistrosNivelAgua, RegistrosFlujoAgua, Sensor, TipoSensor
 
 
 # CRUD completo
+
+class SensorListCreateView(generics.ListCreateAPIView):
+    queryset = Sensor.objects.all()
+    serializer_class = SensorSerializer
+
+class SensorRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Sensor.objects.all()
+    serializer_class = SensorSerializer
+
 
 class ClienteListCreateView(generics.ListCreateAPIView):
     queryset = Cliente.objects.all()
@@ -35,13 +47,21 @@ class ClienteDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class PeceraListCreateView(generics.ListCreateAPIView):
     queryset = Pecera.objects.all()
-    serializer_class = PeceraSerializer
+    serializer_class = PecerasSerializer
+
+# class PeceraDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Pecera.objects.all()
+#     serializer_class = PeceraSerializer
+
+
+
+# class PecerasListCreateView(generics.ListCreateAPIView):
+#     queryset = Pecera.objects.all()
+#     serializer_class = PecerasSerializer
 
 class PeceraDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Pecera.objects.all()
     serializer_class = PeceraSerializer
-
-
 # Solo GET, POST, DELETE
 class RegistrosTemperaturaView(generics.ListCreateAPIView):
     queryset = RegistrosTemperatura.objects.all()
@@ -95,3 +115,11 @@ class RegistrosFlujoAguaView(generics.ListCreateAPIView):
 class RegistrosFlujoAguaDeleteView(generics.DestroyAPIView):
     queryset = RegistrosFlujoAgua.objects.all()
     serializer_class = RegistrosFlujoAguaSerializer
+
+class TipoSensorListCreateView(generics.ListCreateAPIView):
+    queryset = TipoSensor.objects.all()
+    serializer_class = TipoSensorSerializer
+
+class TipoSensorRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = TipoSensor.objects.all()
+    serializer_class = TipoSensorSerializer

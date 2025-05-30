@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from peceras.models import Cliente, Pecera, \
     RegistrosNivelOxigenoAgua, RegistrosTemperatura, RegistrosCalidadAgua, \
-    RegistrosMovimiento, RegistrosNivelAgua, RegistrosFlujoAgua
+    RegistrosMovimiento, RegistrosNivelAgua, RegistrosFlujoAgua, TipoSensor
 
 
 
@@ -11,11 +11,11 @@ class ClienteSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class PeceraSerializer(serializers.ModelSerializer):
+
+class PecerasSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pecera
         fields = '__all__'
-
 
 
 class RegistrosTemperaturaSerializer(serializers.ModelSerializer):
@@ -58,4 +58,17 @@ class PeceraSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Pecera
+        fields = '__all__'
+
+from peceras.models import Sensor
+
+class SensorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sensor
+        fields = '__all__'
+
+
+class TipoSensorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TipoSensor
         fields = '__all__'
