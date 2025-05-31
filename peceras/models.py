@@ -1,80 +1,68 @@
 from django.db import models
 
-class Pecera(models.Model):
-    tamaño = models.CharField(max_length=50)
-    cantidad_de_peces = models.IntegerField()
-
-    def __str__(self):
-        return f'Pecera {self.id} - Tamaño: {self.tamaño}'
-
-
-class Sensor(models.Model):
+class Tamaño(models.Model):
     nombre = models.CharField(max_length=100)
-    tipo = models.CharField(max_length=50)
-    marca = models.CharField(max_length=50)
-    modelo = models.CharField(max_length=50)
-    estado = models.BooleanField(default=True)
-    fk_pecera = models.ForeignKey(Pecera, on_delete=models.CASCADE, related_name='sensores')
 
     def __str__(self):
-        return f'{self.nombre} ({self.tipo}) - Pecera {self.fk_pecera.id}'
+        return self.nombre
 
 
-class Temperatura(models.Model):
-    valor = models.FloatField()
-    fecha_hora = models.DateTimeField()
-    fk_pecera = models.ForeignKey(Pecera, on_delete=models.CASCADE, related_name='temperaturas')
-    fk_sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, related_name='temperaturas')
-
-    def __str__(self):
-        return f'{self.valor}°C - {self.fecha_hora}'
-
-
-class PurezaAgua(models.Model):
-    valor = models.IntegerField()
-    fecha_hora = models.DateTimeField()
-    fk_pecera = models.ForeignKey(Pecera, on_delete=models.CASCADE, related_name='purezas_agua')
-    fk_sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, related_name='purezas_agua')
+class Cliente(models.Model):
+    nombre = models.CharField(max_length=100)
+    contraseña = models.CharField(max_length=128)  # puedes usar un método hash más adelante
+    admin = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'Pureza: {self.valor} - {self.fecha_hora}'
+        return self.nombre
 
 
-class CorrienteElectrica(models.Model):
-    valor = models.BooleanField()
-    fecha_hora = models.DateTimeField()
-    fk_pecera = models.ForeignKey(Pecera, on_delete=models.CASCADE, related_name='corrientes_electricas')
-    fk_sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, related_name='corrientes_electricas')
-
-    def __str__(self):
-        return f'Corriente: {"Sí" if self.valor else "No"} - {self.fecha_hora}'
-
-
-class Movimiento(models.Model):
-    valor = models.BooleanField()
-    fecha_hora = models.DateTimeField()
-    fk_pecera = models.ForeignKey(Pecera, on_delete=models.CASCADE, related_name='movimientos')
-    fk_sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, related_name='movimientos')
+class Pecera(models.Model):
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    tamaño = models.ForeignKey(Tamaño, on_delete=models.SET_NULL, null=True)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'Movimiento: {"Sí" if self.valor else "No"} - {self.fecha_hora}'
+        return self.nombre
 
 
-class NivelAgua(models.Model):
-    valor = models.IntegerField()
-    fecha_hora = models.DateTimeField()
-    fk_pecera = models.ForeignKey(Pecera, on_delete=models.CASCADE, related_name='niveles_agua')
-    fk_sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, related_name='niveles_agua')
-
-    def __str__(self):
-        return f'Nivel Agua: {self.valor} - {self.fecha_hora}'
+class RegistrosTemperatura(models.Model):
+    pecera = models.ForeignKey(Pecera, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
+    temperatura = models.FloatField()
+    sensor = models.IntegerField()
 
 
-class NivelOxigeno(models.Model):
-    valor = models.FloatField()
-    fecha_hora = models.DateTimeField()
-    fk_pecera = models.ForeignKey(Pecera, on_delete=models.CASCADE, related_name='niveles_oxigeno')
-    fk_sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE, related_name='niveles_oxigeno')
+class RegistrosFlujoAgua(models.Model):
+    pecera = models.ForeignKey(Pecera, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
+    flujo = models.IntegerField()
+    sensor = models.IntegerField()
 
-    def __str__(self):
-        return f'Oxígeno: {self.valor} - {self.fecha_hora}'
+
+class RegistrosMovimiento(models.Model):
+    pecera = models.ForeignKey(Pecera, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
+    movimiento = models.BooleanField()
+    sensor = models.IntegerField()
+
+
+class RegistrosCalidadAgua(models.Model):
+    pecera = models.ForeignKey(Pecera, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
+    calidad = models.FloatField()
+    sensor = models.IntegerField()
+
+
+class RegistrosNivelAgua(models.Model):
+    pecera = models.ForeignKey(Pecera, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
+    porcentaje = models.IntegerField()
+    sensor = models.IntegerField()
+
+
+class RegistrosNivelOxigenoAgua(models.Model):
+    pecera = models.ForeignKey(Pecera, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
+    oxigeno_disuelto = models.FloatField()
+    sensor = models.IntegerField()
