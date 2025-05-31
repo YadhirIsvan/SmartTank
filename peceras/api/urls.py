@@ -1,6 +1,5 @@
 from django.urls import path
 from .views import (
-    TamañoListCreateView, TamañoDetailView,
     ClienteListCreateView, ClienteDetailView,
     PeceraListCreateView, PeceraDetailView,
     RegistrosTemperaturaView, RegistrosTemperaturaDeleteView,
@@ -12,9 +11,6 @@ from .views import (
 )
 
 urlpatterns = [
-    # Tamaños
-    path('tamaños/', TamañoListCreateView.as_view(), name='tamaño-list'),
-    path('tamaños/<int:pk>/', TamañoDetailView.as_view(), name='tamaño-detail'),
 
     # Clientes
     path('clientes/', ClienteListCreateView.as_view(), name='cliente-list'),

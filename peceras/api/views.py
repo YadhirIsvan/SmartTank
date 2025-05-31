@@ -1,5 +1,4 @@
 from peceras.api.serializers import (
-    TamañoSerializer,
     ClienteSerializer,
     PeceraSerializer,
     RegistrosTemperaturaSerializer,
@@ -18,20 +17,12 @@ from rest_framework import  status
 
 # 
 from rest_framework import generics
-from peceras.models import Tamaño, Cliente, Pecera, \
+from peceras.models import Cliente, Pecera, \
     RegistrosTemperatura, RegistrosCalidadAgua, RegistrosNivelOxigenoAgua, \
     RegistrosMovimiento, RegistrosNivelAgua, RegistrosFlujoAgua
 
 
 # CRUD completo
-class TamañoListCreateView(generics.ListCreateAPIView):
-    queryset = Tamaño.objects.all()
-    serializer_class = TamañoSerializer
-
-class TamañoDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Tamaño.objects.all()
-    serializer_class = TamañoSerializer
-
 
 class ClienteListCreateView(generics.ListCreateAPIView):
     queryset = Cliente.objects.all()
