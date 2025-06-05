@@ -9,10 +9,13 @@ from .views import (
     RegistrosNivelAguaView, RegistrosNivelAguaDeleteView,
     RegistrosFlujoAguaView, RegistrosFlujoAguaDeleteView,
     SensorListCreateView, SensorRetrieveUpdateDestroyView,
-    TipoSensorListCreateView, TipoSensorRetrieveUpdateDestroyView
+    TipoSensorListCreateView, TipoSensorRetrieveUpdateDestroyView,
+        EMQXReceiverView  # 👈 agrega esto al import
 )
 
 urlpatterns = [
+
+    path('emqx/', EMQXReceiverView.as_view(), name='emqx'),  # 👈 ruta funcional
 
     # Clientes
     path('clientes/', ClienteListCreateView.as_view(), name='cliente-list'),
@@ -28,20 +31,20 @@ urlpatterns = [
     path('registros/temperatura/', RegistrosTemperaturaView.as_view(), name='temperatura-list'),
     path('registros/temperatura/<int:pk>/', RegistrosTemperaturaDeleteView.as_view(), name='temperatura-delete'),
 
-    path('registros/calidad/', RegistrosCalidadAguaView.as_view(), name='calidadagua-list'),
-    path('registros/calidad/<int:pk>/', RegistrosCalidadAguaDeleteView.as_view(), name='calidadagua-delete'),
+    path('registros/calidadAgua/', RegistrosCalidadAguaView.as_view(), name='calidadagua-list'),
+    path('registros/calidadAgua/<int:pk>/', RegistrosCalidadAguaDeleteView.as_view(), name='calidadagua-delete'),
 
-    path('registros/oxigeno/', RegistrosNivelOxigenoAguaView.as_view(), name='oxigeno-list'),
-    path('registros/oxigeno/<int:pk>/', RegistrosNivelOxigenoAguaDeleteView.as_view(), name='oxigeno-delete'),
+    path('registros/nivelOxigeno/', RegistrosNivelOxigenoAguaView.as_view(), name='oxigeno-list'),
+    path('registros/nivelOxigeno/<int:pk>/', RegistrosNivelOxigenoAguaDeleteView.as_view(), name='oxigeno-delete'),
 
     path('registros/movimiento/', RegistrosMovimientoView.as_view(), name='movimiento-list'),
     path('registros/movimiento/<int:pk>/', RegistrosMovimientoDeleteView.as_view(), name='movimiento-delete'),
 
-    path('registros/nivelagua/', RegistrosNivelAguaView.as_view(), name='nivelagua-list'),
-    path('registros/nivelagua/<int:pk>/', RegistrosNivelAguaDeleteView.as_view(), name='nivelagua-delete'),
+    path('registros/nivelAgua/', RegistrosNivelAguaView.as_view(), name='nivelagua-list'),
+    path('registros/nivelAgua/<int:pk>/', RegistrosNivelAguaDeleteView.as_view(), name='nivelagua-delete'),
 
-    path('registros/flujoagua/', RegistrosFlujoAguaView.as_view(), name='flujoagua-list'),
-    path('registros/flujoagua/<int:pk>/', RegistrosFlujoAguaDeleteView.as_view(), name='flujoagua-delete'),
+    path('registros/flujoAgua/', RegistrosFlujoAguaView.as_view(), name='flujoagua-list'),
+    path('registros/fluxjoAgua/<int:pk>/', RegistrosFlujoAguaDeleteView.as_view(), name='flujoagua-delete'),
 
     path('sensores/', SensorListCreateView.as_view(), name='sensor-list-create'),
     path('sensores/<int:pk>/', SensorRetrieveUpdateDestroyView.as_view(), name='sensor-detail'),
